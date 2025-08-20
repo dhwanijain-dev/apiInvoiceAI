@@ -1,0 +1,8 @@
+Flask
+requests
+pydantic
+dotenv
+pdfplumber
+PyMuPDF
+gunicorn
+google-generativeai

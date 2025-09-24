@@ -61,10 +61,72 @@ def extract_text():
             return jsonify({"error": "No text provided"}), 400
 
         prompt = f"""
-        Convert the following noisy text into valid JSON:
-        {noisy_text}
-        Output ONLY JSON without markdown code blocks or explanations.
-        """
+                Convert the following noisy text into valid JSON.
+                
+                Follow this schema strictly (keys must not be missing, even if values are empty):
+                
+                {
+                  "AckDate": string,
+                  "AckNo": string,
+                  "IRN": string,
+                  "amountInWords": string,
+                  "bankDetails": {
+                    "IFSC": string,
+                    "accountHolder": string,
+                    "accountNo": string,
+                    "bankName": string,
+                    "branch": string
+                  },
+                  "buyer": {
+                    "GSTIN": string,
+                    "address": string,
+                    "name": string,
+                    "state": string,
+                    "stateCode": string
+                  },
+                  "companyPAN": string,
+                  "consignee": { same as buyer },
+                  "deliveryNoteDate": string,
+                  "invoiceNo": string,
+                  "items": [
+                    {
+                      "SlNo": number,
+                      "description": string,
+                      "HSN": string,
+                      "quantity": string,
+                      "rate": string,
+                      "amount": string,
+                      "GST": string,
+                      "CGST": string,
+                      "SGST": string
+                    }
+                  ],
+                  "placeOfSupply": string,
+                  "supplier": {
+                    "FSSAI": string,
+                    "GSTIN": string,
+                    "address": string,
+                    "name": string,
+                    "state": string,
+                    "stateCode": string
+                  },
+                  "taxAmountInWords": string,
+                  "taxSummary": {
+                    "HSN": string,
+                    "centralTax": string,
+                    "stateTax": string,
+                    "taxableValue": string,
+                    "totalTax": string
+                  },
+                  "total": string
+                }
+                
+                Now clean and extract data from this text:
+                {noisy_text}
+                
+                Output ONLY valid JSON without markdown or explanations.
+                """
+
 
         response = model.generate_content(prompt)
 

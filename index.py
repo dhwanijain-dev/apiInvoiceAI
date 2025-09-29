@@ -17,7 +17,7 @@ genai.configure(api_key=api_key)
 app = Flask(__name__)
 
 # Use the right model name for your account
-model = genai.GenerativeModel("models/gemini-1.5-flash")  # Change if needed
+model = genai.GenerativeModel("gemini-1.5-flash")  # Change if needed
 
 # Utility function for file handling
 def save_uploaded_file(file):

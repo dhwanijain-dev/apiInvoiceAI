@@ -129,6 +129,10 @@ def extract_text():
 
                     Now clean and extract data from this text:
                     {noisy_text}
+                    Important: Also extract purchase order number and date. The JSON MUST include the keys "PONumber" and "PODate" at the top-level (use empty strings if not found).
+
+                    Common label variations for PONumber include: "PO", "PO No", "PO Number", "Order No", "Order Number", "Ref No", "Ref Number", "Your Order No", "Order#".
+                    Common label variations for PODate include: "PO Date", "Order Date", "Date", "Order Dt", "Delivery Date" (use the value that represents the purchase order date).
 
                     Output ONLY valid JSON without markdown or explanations.
                     """
@@ -172,7 +176,8 @@ def text_to_json():
         prompt = f"""
         Convert the following noisy text into valid JSON:
         {noisy_text}
-        Output ONLY JSON without markdown code blocks or explanations.
+    Important: Include top-level keys "PONumber" and "PODate" (use empty strings if missing). Common label variations for PONumber: "PO", "PO No", "Order No", "Ref No", "Your Order No". For PODate: "PO Date", "Order Date", "Date".
+    Output ONLY JSON without markdown code blocks or explanations.
         """
 
         response = model.generate_content(prompt)
